@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESP32 Edge Capture</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        .form-container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #0078D7;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background-color: #0078D7;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #005ea6;
+        }
+
+        #status {
+            margin-top: 15px;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-ready {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .status-processing {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .status-success {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="form-container">
+            <h1>ESP32 Edge Capture</h1>
+            <div class="form-group">
+                <label for="com_port">COM Port:</label>
+                <select id="com_port">
+                    {% for port in com_ports %}
+                    <option value="{{ port }}">{{ port }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="api_key">Edge Impulse API Key:</label>
+                <input type="password" id="api_key" required>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Mode:</label>
+                <label><input type="radio" name="mode" value="training" checked> Training</label>
+                <label><input type="radio" name="mode" value="testing"> Testing</label>
+            </div>
+
+            <div class="form-group">
+                <label for="label">Label:</label>
+                <input type="text" id="label" required>
+            </div>
+
+            <div class="form-group">
+                <label>Data Type:</label>
+                <label><input type="radio" name="data_type" value="image" checked> Image</label>
+                <label><input type="radio" name="data_type" value="audio"> Audio</label>
+            </div>
+
+            <button onclick="handleCapture()">Capture and Upload</button>
+            <div id="status" class="status-ready">Ready to capture</div>
+        </div>
+
+        <div class="image-container">
+            <img id="preview" style="display: none;" />
+        </div>
+    </div>
+
+    <script>
+        function handleCapture() {
+            const status = document.getElementById('status');
+            const preview = document.getElementById('preview');
+            const formData = new FormData();
+
+            const com_port = document.getElementById('com_port').value;
+            const api_key = document.getElementById('api_key').value;
+            const label = document.getElementById('label').value;
+            const mode = document.querySelector('input[name="mode"]:checked').value;
+            const data_type = document.querySelector('input[name="data_type"]:checked').value;
+
+            formData.append('com_port', com_port);
+            formData.append('api_key', api_key);
+            formData.append('label', label);
+            formData.append('mode', mode);
+
+            status.className = 'status-processing';
+            status.textContent = 'Processing...';
+
+            fetch(data_type === 'image' ? '/capture' : '/record_audio', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    status.className = 'status-success';
+                    status.textContent = `Successfully uploaded to ${mode} mode!`;
+
+                    if (data.image_url) {
+                        const timestamp = new Date().getTime();
+                        preview.src = data.image_url + '?t=' + timestamp;
+                        preview.style.display = 'block';
+                    } else if (data.audio_url) {
+                        preview.style.display = 'none';
+                        const audio = new Audio(data.audio_url + '?t=' + new Date().getTime());
+                        audio.play();
+                    }
+                } else {
+                    status.className = 'status-ready';
+                    status.textContent = 'Error: ' + data.message;
+                    preview.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                status.className = 'status-ready';
+                status.textContent = 'Error: ' + error.message;
+                preview.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html>

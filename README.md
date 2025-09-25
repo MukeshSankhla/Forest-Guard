@@ -187,22 +187,6 @@ Built with **Lovable.dev**, the dashboard:
 
 ---
 
-## 🧾 Bill of Materials (BOM) — High Level
-
-| Item                     | Qty/Node | Notes                         |
-| ------------------------ | -------: | ----------------------------- |
-| ESP32-S3 module          |        1 | WROOM-1 N16R8 recommended     |
-| RP2040 LoRa (Meshtastic) |        1 | Waveshare module              |
-| Env sensor               |        1 | Temp/Humi/UV/Light/Pressure   |
-| Smoke sensor             |        1 | Analog                        |
-| I²S MEMS mic             |        1 | Audio classification          |
-| GNSS (optional)          |        1 | Location + time               |
-| Li-Po + Solar            |        1 | With charge/power mgmt        |
-| Custom PCB               |        1 | EasyEDA Gerber/BOM included   |
-| Screws & enclosure       |        — | STLs in `/Hardware/Enclosure` |
-
----
-
 ## 🧑‍💻 Development Notes
 
 * **LoRa UART:** Prefer hardware UART if available; otherwise align to module baud + buffer sizes.

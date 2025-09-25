@@ -15,7 +15,8 @@
 * A **Gateway** (Arduino UNO R4 WiFi) that aggregates mesh traffic, logs to **Firebase RTDB**, drives a **TFT UI**, and sounds a **buzzer**
 * A **web dashboard** visualizing nodes on a **map** with **alerts** and quick stats
 
-![System Overview](docs/images/system-overview.png)
+![NextPCB](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/NextPCB.JPG)
+![PCBA](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/PCBA.JPG)
 
 ---
 
@@ -41,6 +42,8 @@
 * **Li-Po + Solar** (charging/power management on PCB)
 * 3D printed enclosure (Fusion 360 + STLs included)
 
+![Node BOM Overview](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/N_BOM.JPG)
+
 ### Gateway
 
 * **Arduino UNO R4 WiFi**
@@ -49,8 +52,7 @@
 * **Buzzer** + **Power switch**
 * 3D printed enclosure
 
-![Node Exploded](docs/images/node-exploded.png)
-![Gateway Exploded](docs/images/gateway-exploded.png)
+![Node BOM Overview](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/G_BOM.JPG)
 
 ---
 
@@ -93,11 +95,6 @@ The dashboard toggles `nodes/<ID>/meta/Event` to **false** to acknowledge/clear.
 * **Preprocessing:** **MFCC** (Audio) features; split 10-s recordings into **1-s** windows.
 * **Model:** **Classification** (1D CNN works well); export **Arduino library** and include in Node.
 * **On-device:** Runs on ESP32-S3 (Core 1) so LoRa/sensors remain non-blocking.
-
-![Edge Impulse – Create Impulse](docs/images/ei-impulse.png)
-![Edge Impulse – Feature Explorer](docs/images/ei-feature-explorer.png)
-![Edge Impulse – Training](docs/images/ei-training.png)
-
 ---
 
 ## 🧪 Quick Start
@@ -171,8 +168,8 @@ Built with **Lovable.dev**, the dashboard:
 * Lets you **open a node** to view ENV trends and event history
 * **Acknowledge** an alert by toggling `meta/Event=false`, which triggers GA to broadcast `#<ID>+C*`
 
-![Dashboard – Map](docs/images/dashboard-map.png)
-![Dashboard – Node Details](docs/images/dashboard-node.png)
+![Dashboard – Map](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Screenshot%202025-09-16%20101348.png)
+![Dashboard – Node Details](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Screenshot%202025-09-16%20101044.png)
 
 ---
 

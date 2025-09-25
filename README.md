@@ -1,7 +1,3 @@
-Here’s a polished **README.md** you can drop into your GitHub repo. I’ve included image placeholders (put your actual files into a `/docs/images/` folder and keep the same names, or change the paths).
-
----
-
 # Forest Guard — Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Hero](docs/images/hero.jpg)

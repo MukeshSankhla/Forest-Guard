@@ -1,6 +1,6 @@
 # Forest Guard — Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
-![Hero](docs/images/hero.jpg)
+![Hero]([docs/images/hero.jpg](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Header.png))
 
 > Solar-powered sensor nodes + LoRa Meshtastic mesh + Edge Impulse gunshot detection + Firebase dashboard.
 ---

@@ -17,6 +17,7 @@
 
 ![NextPCB](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/NextPCB.JPG)
 ![PCBA](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/PCBA.JPG)
+![PCB](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/DSC02566.JPG)
 
 ---
 

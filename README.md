@@ -1,3 +1,7 @@
+Here’s a **complete `README.md`** with your content plus **GitHub-safe Mermaid graphs** for the Node (NA) and Gateway (GA) behavior, and an **end-to-end event/clear sequence**. You can copy-paste this straight into your repo.
+
+---
+
 # Forest Guard — Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Hero](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Header.png)
@@ -5,9 +9,9 @@
 > Solar-powered sensor nodes + LoRa Meshtastic mesh + Edge Impulse gunshot detection + Firebase dashboard.
 ---
 
-## 🌲 What is LoRaMeshGuard?
+## 🌲 What is Forest Guard?
 
-**LoRaMeshGuard** is a field-deployable forest monitoring system designed for **zero-infrastructure** locations (no grid power / no cellular). It uses:
+**Forest Guard** is a field-deployable forest monitoring system designed for **zero-infrastructure** locations (no grid power / no cellular). It uses:
 
 * **Solar-powered ESP32-S3 nodes** with sensors (Env + Smoke + Mic) and optional **GNSS**
 * **LoRa Meshtastic** radios for long-range **mesh** communication
@@ -30,6 +34,7 @@
 * **Power-aware:** Solar + battery design
 * **Robust gateway:** NTP time gate; dedup events; Firebase sync; non-blocking buzzer
 * **Dashboard:** Map, node cards, charts, and alert acknowledgment
+
 ---
 
 ## 🧱 Hardware
@@ -53,44 +58,8 @@
 * **Buzzer** + **Power switch**
 * 3D printed enclosure
 
-![Node BOM Overview](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/G_BOM.JPG)
+![Gateway BOM Overview](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/G_BOM.JPG)
 
-##How It Works
----
-###NA (ESP32-S3 Node) – Behavior Logic
-```mermaid
-graph TD
-    A[Boot] --> B[LED Blue (breath)]
-    B --> C[Init sensors + LoRa + (optional) GNSS]
-    C --> D{GNSS_AVAILABLE?}
-    D -->|No| E[Set time=NT • loc=INITIAL_LAT/LON] --> R
-    D -->|Yes| F{Satellites > 3?}
-    F -->|No| G[Use time from GNSS if available • loc=INITIAL • keep trying] --> R
-    F -->|Yes| H[Use GNSS time+location] --> R
-
-    %% Registration
-    R[Registration Loop<br/>send '#NODE_ID*' every 10s] --> I{ACK '#NODE_ID+OK*' from GA?}
-    I -->|No| R
-    I -->|Yes| J[Registered • start timers]
-
-    %% Periodic telemetry
-    J --> K[Every 5s: Read ENV]
-    K --> L[Send '#E,ID,t,h,uv,lux,p,alt*' • LED Green (breath)]
-    L --> M{Satellites > 3?}
-    M -->|Yes| N[Send '#L,ID,lat,lon*']
-    M -->|No| O[Skip LOC this cycle]
-    N --> P
-    O --> P
-
-    %% Event detection
-    P[Non-blocking loop] --> Q{Event? <br/>Gunshot score≥τ OR Smoke≥τ}
-    Q -->|No| P
-    Q -->|Yes| S[Latch EVENT • LED Red (breath) • eventId=random(0..100)]
-    S --> T[Every 10s send F+ or G+ frame <br/> '#F+id,ID,smoke,DATE/TIME|NT*' <br/> '#G+id,ID,score,DATE/TIME|NT*' ]
-    T --> U{Received '#NODE_ID+C*' ?}
-    U -->|No| T
-    U -->|Yes| V[Clear event • reset flags • allow new events] --> P
-```
 ---
 
 ## 🔗 Network & Message Protocol
@@ -132,6 +101,115 @@ The dashboard toggles `nodes/<ID>/meta/Event` to **false** to acknowledge/clear.
 * **Preprocessing:** **MFCC** (Audio) features; split 10-s recordings into **1-s** windows.
 * **Model:** **Classification** (1D CNN works well); export **Arduino library** and include in Node.
 * **On-device:** Runs on ESP32-S3 (Core 1) so LoRa/sensors remain non-blocking.
+
+---
+
+## 📈 How It Works (Behavior Graphs)
+
+> These Mermaid diagrams render on GitHub and document the exact behavior.
+> **Note:** ASCII only, one edge per line, to avoid parser errors.
+
+### NA (ESP32-S3 Node) – Behavior Logic
+
+```mermaid
+graph TD
+    A[Boot] --> B[LED Blue (breath)]
+    B --> C[Init sensors + LoRa + optional GNSS]
+    C --> D{GNSS_AVAILABLE?}
+    D -->|No| E[Set time = NT; loc = INITIAL_LAT/LON]
+    E --> R[Registration Loop]
+    D -->|Yes| F{Satellites > 3?}
+    F -->|No| G[Use GNSS time if available; keep trying; loc = INITIAL]
+    G --> R
+    F -->|Yes| H[Use GNSS time + location]
+    H --> R
+
+    R[Send '#NODE_ID*' every 10s] --> I{ACK '#NODE_ID+OK*' from GA?}
+    I -->|No| R
+    I -->|Yes| J[Registered; start timers]
+
+    J --> K[Every 5s: read ENV]
+    K --> L[Send '#E,ID,t,h,uv,lux,p,alt*' ; LED Green (breath)]
+    L --> M{Satellites > 3?}
+    M -->|Yes| N[Send '#L,ID,lat,lon*']
+    M -->|No| O[Skip LOC this cycle]
+    N --> P[Main loop]
+    O --> P
+
+    P --> Q{Event? Gunshot score >= THRESH OR Smoke >= THRESH}
+    Q -->|No| P
+    Q -->|Yes| S[Latch EVENT; LED Red (breath); eventId = random(0..100)]
+    S --> T[Every 10s send F+ or G+ frame with date/time or NT]
+    T --> U{Received '#NODE_ID+C*' ?}
+    U -->|No| T
+    U -->|Yes| V[Clear event; reset flags; allow new events]
+    V --> P
+```
+
+### GA (UNO R4 WiFi Gateway) – Behavior Logic
+
+```mermaid
+graph TD
+    A[Boot] --> B[Init WiFi + TFT + LoRa + NTP]
+    B --> C{NTP epoch >= 2025?}
+    C -->|No| B
+    C -->|Yes| D[Ready to log with real time]
+
+    D --> E[Read LoRa; parse only '#...*']
+    E --> F{Frame type?}
+
+    F -->|"#<NODE_ID>*"| G[Save nodeId; send '#<NODE_ID>+OK*']
+    G --> D
+
+    F -->|E,ID,t,h,uv,lux,p,alt| H[Update ENV cache]
+    H --> I{Delta >= +/-1.0 on any field?}
+    I -->|Yes| J[PUT /nodes/ID/env/<epoch>; PATCH /nodes/ID/meta{lastSeen}]
+    I -->|No| D
+    J --> D
+
+    F -->|L,ID,lat,lon| K[Update last location]
+    K --> L{Moved >= 0.00010 deg (~11 m)?}
+    L -->|Yes| M[PUT /nodes/ID/Loc/<epoch>]
+    L -->|No| D
+    M --> D
+
+    F -->|F+id or G+id| N{Already logged or lastCleared?}
+    N -->|Yes| O[Re-broadcast '#ID+C*' (duplicate)]
+    O --> D
+    N -->|No| P[Set /nodes/ID/meta/Event = true; Log to fire/gun; Start buzzer]
+    P --> Q[Poll /nodes/ID/meta/Event every 2s]
+    Q --> R{Event flag false?}
+    R -->|No| Q
+    R -->|Yes| S[Broadcast '#ID+C*' x3; stop buzzer; remember lastClearedId]
+    S --> D
+```
+
+### End-to-End Event & Clear Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant NA as Node (ESP32-S3)
+    participant GA as Gateway (UNO R4 WiFi)
+    participant FB as Firebase RTDB
+    participant DB as Web Dashboard
+
+    NA->>GA: #G+eid,ID,score,DATE/TIME|NT*
+    GA->>FB: set nodes/ID/meta/Event = true
+    GA->>FB: push nodes/ID/gun/<epoch> {score, NodeTime}
+    GA->>GA: Buzzer ON (non-blocking)
+    GA->>DB: Data visible on dashboard
+
+    loop Poll
+        GA->>FB: read nodes/ID/meta/Event
+    end
+
+    DB->>FB: operator sets nodes/ID/meta/Event = false
+    GA->>GA: Buzzer OFF
+    GA-->>NA: #ID+C* (repeat a few times)
+    NA->>NA: clear event; resume telemetry
+```
+
 ---
 
 ## 🧪 Quick Start
@@ -239,7 +317,7 @@ PRs welcome! Please open an **issue** for bugs/requests, or discuss features (ad
 
 ## 📜 License
 
-**MIT License** — see [LICENSE](LICENSE).
+**MIT License** — see [LICENSE].
 Hardware designs and 3D models are shared for educational and non-commercial replication; please attribute the project.
 
 ---
@@ -259,3 +337,5 @@ Hardware designs and 3D models are shared for educational and non-commercial rep
 **Hackster:** [https://www.hackster.io/Mukesh_Sankhla](https://www.hackster.io/Mukesh_Sankhla)
 
 ---
+
+> If you want, I can also create a **banner SVG** (system overview) that matches your color scheme and add it to `/Images/` for the top of this README.

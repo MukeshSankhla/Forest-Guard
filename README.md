@@ -55,6 +55,42 @@
 
 ![Node BOM Overview](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/G_BOM.JPG)
 
+##How It Works
+---
+###NA (ESP32-S3 Node) – Behavior Logic
+```mermaid
+graph TD
+    A[Boot] --> B[LED Blue (breath)]
+    B --> C[Init sensors + LoRa + (optional) GNSS]
+    C --> D{GNSS_AVAILABLE?}
+    D -->|No| E[Set time=NT • loc=INITIAL_LAT/LON] --> R
+    D -->|Yes| F{Satellites > 3?}
+    F -->|No| G[Use time from GNSS if available • loc=INITIAL • keep trying] --> R
+    F -->|Yes| H[Use GNSS time+location] --> R
+
+    %% Registration
+    R[Registration Loop<br/>send '#NODE_ID*' every 10s] --> I{ACK '#NODE_ID+OK*' from GA?}
+    I -->|No| R
+    I -->|Yes| J[Registered • start timers]
+
+    %% Periodic telemetry
+    J --> K[Every 5s: Read ENV]
+    K --> L[Send '#E,ID,t,h,uv,lux,p,alt*' • LED Green (breath)]
+    L --> M{Satellites > 3?}
+    M -->|Yes| N[Send '#L,ID,lat,lon*']
+    M -->|No| O[Skip LOC this cycle]
+    N --> P
+    O --> P
+
+    %% Event detection
+    P[Non-blocking loop] --> Q{Event? <br/>Gunshot score≥τ OR Smoke≥τ}
+    Q -->|No| P
+    Q -->|Yes| S[Latch EVENT • LED Red (breath) • eventId=random(0..100)]
+    S --> T[Every 10s send F+ or G+ frame <br/> '#F+id,ID,smoke,DATE/TIME|NT*' <br/> '#G+id,ID,score,DATE/TIME|NT*' ]
+    T --> U{Received '#NODE_ID+C*' ?}
+    U -->|No| T
+    U -->|Yes| V[Clear event • reset flags • allow new events] --> P
+```
 ---
 
 ## 🔗 Network & Message Protocol

@@ -105,109 +105,99 @@ The dashboard toggles `nodes/<ID>/meta/Event` to **false** to acknowledge/clear.
 ---
 
 ## 📈 How It Works (Behavior Graphs)
-
-> These Mermaid diagrams render on GitHub and document the exact behavior.
-> **Note:** ASCII only, one edge per line, to avoid parser errors.
-
+---
 ### NA (ESP32-S3 Node) – Behavior Logic
 
 ```mermaid
 graph TD
-    A[Boot] --> B[LED Blue (breath)]
-    B --> C[Init sensors + LoRa + optional GNSS]
+    A[Boot] --> B[LED Blue breath]
+    B --> C[Init sensors, LoRa, optional GNSS]
     C --> D{GNSS_AVAILABLE?}
-    D -->|No| E[Set time = NT; loc = INITIAL_LAT/LON]
-    E --> R[Registration Loop]
-    D -->|Yes| F{Satellites > 3?}
-    F -->|No| G[Use GNSS time if available; keep trying; loc = INITIAL]
+    D -->|No| E[time = NT, loc = INITIAL]
+    E --> R[Registration loop]
+    D -->|Yes| F{Satellites > 3}
+    F -->|No| G[Use GNSS time if present, keep trying, loc = INITIAL]
     G --> R
-    F -->|Yes| H[Use GNSS time + location]
+    F -->|Yes| H[Use GNSS time and location]
     H --> R
 
-    R[Send '#NODE_ID*' every 10s] --> I{ACK '#NODE_ID+OK*' from GA?}
+    R[Send #NODE_ID* every 10s] --> I{ACK #NODE_ID+OK* from GA}
     I -->|No| R
-    I -->|Yes| J[Registered; start timers]
+    I -->|Yes| J[Registered, start timers]
 
-    J --> K[Every 5s: read ENV]
-    K --> L[Send '#E,ID,t,h,uv,lux,p,alt*' ; LED Green (breath)]
-    L --> M{Satellites > 3?}
-    M -->|Yes| N[Send '#L,ID,lat,lon*']
+    J --> K[Every 5s read ENV]
+    K --> L[Send #E,ID,t,h,uv,lux,p,alt* ; LED Green breath]
+    L --> M{Satellites > 3}
+    M -->|Yes| N[Send #L,ID,lat,lon*]
     M -->|No| O[Skip LOC this cycle]
     N --> P[Main loop]
     O --> P
 
-    P --> Q{Event? Gunshot score >= THRESH OR Smoke >= THRESH}
+    P --> Q{Event detected}
     Q -->|No| P
-    Q -->|Yes| S[Latch EVENT; LED Red (breath); eventId = random(0..100)]
-    S --> T[Every 10s send F+ or G+ frame with date/time or NT]
-    T --> U{Received '#NODE_ID+C*' ?}
+    Q -->|Yes| S[Latch EVENT ; LED Red breath ; eventId=random 0..100]
+    S --> T[Every 10s send F+ or G+ with date time or NT]
+    T --> U{Received #NODE_ID+C*}
     U -->|No| T
-    U -->|Yes| V[Clear event; reset flags; allow new events]
+    U -->|Yes| V[Clear event ; reset flags]
     V --> P
 ```
+
+---
 
 ### GA (UNO R4 WiFi Gateway) – Behavior Logic
 
 ```mermaid
 graph TD
-    A[Boot] --> B[Init WiFi + TFT + LoRa + NTP]
-    B --> C{NTP epoch >= 2025?}
+    A[Boot] --> B[Init WiFi, TFT, LoRa, NTP]
+    B --> C{NTP epoch >= 2025}
     C -->|No| B
     C -->|Yes| D[Ready to log with real time]
 
-    D --> E[Read LoRa; parse only '#...*']
-    E --> F{Frame type?}
+    D --> E[Read LoRa ; parse only #...*]
+    E --> F{Frame type}
 
-    F -->|"#<NODE_ID>*"| G[Save nodeId; send '#<NODE_ID>+OK*']
+    F -->|#NODE_ID*| G[Store nodeId ; send #NODE_ID+OK*]
     G --> D
 
     F -->|E,ID,t,h,uv,lux,p,alt| H[Update ENV cache]
-    H --> I{Delta >= +/-1.0 on any field?}
-    I -->|Yes| J[PUT /nodes/ID/env/<epoch>; PATCH /nodes/ID/meta{lastSeen}]
+    H --> I{Delta >= +/-1.0 on any field}
+    I -->|Yes| J[PUT /nodes/ID/env/epoch ; PATCH /nodes/ID/meta lastSeen]
     I -->|No| D
     J --> D
 
     F -->|L,ID,lat,lon| K[Update last location]
-    K --> L{Moved >= 0.00010 deg (~11 m)?}
-    L -->|Yes| M[PUT /nodes/ID/Loc/<epoch>]
+    K --> L{Moved >= 0.00010 deg}
+    L -->|Yes| M[PUT /nodes/ID/Loc/epoch]
     L -->|No| D
     M --> D
 
-    F -->|F+id or G+id| N{Already logged or lastCleared?}
-    N -->|Yes| O[Re-broadcast '#ID+C*' (duplicate)]
+    F -->|F+id or G+id| N{Already logged or lastCleared}
+    N -->|Yes| O[Rebroadcast #ID+C*]
     O --> D
-    N -->|No| P[Set /nodes/ID/meta/Event = true; Log to fire/gun; Start buzzer]
+    N -->|No| P[Set /nodes/ID/meta/Event = true ; log /fire or /gun ; start buzzer]
     P --> Q[Poll /nodes/ID/meta/Event every 2s]
-    Q --> R{Event flag false?}
+    Q --> R{Event flag false}
     R -->|No| Q
-    R -->|Yes| S[Broadcast '#ID+C*' x3; stop buzzer; remember lastClearedId]
+    R -->|Yes| S[Broadcast #ID+C* x3 ; stop buzzer ; remember lastClearedId]
     S --> D
 ```
 
-### End-to-End Event & Clear Sequence
+---
+
+### End-to-End Event and Clear Flow (Flowchart version)
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    participant NA as Node (ESP32-S3)
-    participant GA as Gateway (UNO R4 WiFi)
-    participant FB as Firebase RTDB
-    participant DB as Web Dashboard
-
-    NA->>GA: #G+eid,ID,score,DATE/TIME|NT*
-    GA->>FB: set nodes/ID/meta/Event = true
-    GA->>FB: push nodes/ID/gun/<epoch> {score, NodeTime}
-    GA->>GA: Buzzer ON (non-blocking)
-    GA->>DB: Data visible on dashboard
-
-    loop Poll
-        GA->>FB: read nodes/ID/meta/Event
-    end
-
-    DB->>FB: operator sets nodes/ID/meta/Event = false
-    GA->>GA: Buzzer OFF
-    GA-->>NA: #ID+C* (repeat a few times)
-    NA->>NA: clear event; resume telemetry
+graph TD
+    A[Node detects event] --> B[Node sends F+ or G+ to GA]
+    B --> C[GA sets /nodes/ID/meta/Event = true]
+    C --> D[GA logs /fire or /gun with epoch]
+    D --> E[Buzzer ON (non blocking)]
+    E --> F[Dashboard shows alert]
+    F --> G[Operator sets /meta/Event = false]
+    G --> H[GA polls and sees false]
+    H --> I[GA sends #ID+C* a few times]
+    I --> J[Node clears event and resumes telemetry]
 ```
 
 ---

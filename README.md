@@ -199,7 +199,6 @@ graph TD
     H --> I[GA sends #ID+C* a few times]
     I --> J[Node clears event and resumes telemetry]
 ```
-
 ---
 
 ## 🧪 Quick Start

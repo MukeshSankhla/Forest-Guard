@@ -1,7 +1,3 @@
-Here’s a **complete `README.md`** with your content plus **GitHub-safe Mermaid graphs** for the Node (NA) and Gateway (GA) behavior, and an **end-to-end event/clear sequence**. You can copy-paste this straight into your repo.
-
----
-
 # Forest Guard — Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Hero](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Header.png)
@@ -105,7 +101,6 @@ The dashboard toggles `nodes/<ID>/meta/Event` to **false** to acknowledge/clear.
 ---
 
 ## 📈 How It Works (Behavior Graphs)
----
 ### NA (ESP32-S3 Node) – Behavior Logic
 
 ```mermaid
@@ -189,14 +184,14 @@ graph TD
 
 ```mermaid
 graph TD
-    A[Node detects event] --> B[Node sends F+ or G+ to GA]
-    B --> C[GA sets /nodes/ID/meta/Event = true]
-    C --> D[GA logs /fire or /gun with epoch]
-    D --> E[Buzzer ON (non blocking)]
+    A[Node detects event] --> B[Node sends event frame to gateway]
+    B --> C[Gateway sets meta Event true in Firebase]
+    C --> D[Gateway logs fire or gun event with epoch]
+    D --> E[Buzzer ON non blocking]
     E --> F[Dashboard shows alert]
-    F --> G[Operator sets /meta/Event = false]
-    G --> H[GA polls and sees false]
-    H --> I[GA sends #ID+C* a few times]
+    F --> G[Operator sets meta Event false]
+    G --> H[Gateway polls and sees flag false]
+    H --> I[Gateway sends CLEAR to node multiple times]
     I --> J[Node clears event and resumes telemetry]
 ```
 ---

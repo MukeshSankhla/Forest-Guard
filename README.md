@@ -1,4 +1,4 @@
-# Forest Guard — Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
+# Forest Guard - Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Hero](https://github.com/MukeshSankhla/Forest-Guard/blob/main/Images/Header.png)
 
@@ -293,15 +293,9 @@ Built with **Lovable.dev**, the dashboard:
 
 ---
 
-## 🤝 Contributing
-
-PRs welcome! Please open an **issue** for bugs/requests, or discuss features (additional classifiers like chainsaw detection, species calls, etc.).
-
----
-
 ## 📜 License
 
-**MIT License** — see [LICENSE].
+**MIT License** 
 Hardware designs and 3D models are shared for educational and non-commercial replication; please attribute the project.
 
 ---
@@ -321,5 +315,3 @@ Hardware designs and 3D models are shared for educational and non-commercial rep
 **Hackster:** [https://www.hackster.io/Mukesh_Sankhla](https://www.hackster.io/Mukesh_Sankhla)
 
 ---
-
-> If you want, I can also create a **banner SVG** (system overview) that matches your color scheme and add it to `/Images/` for the top of this README.

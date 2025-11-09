@@ -2,7 +2,12 @@
 ### A Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Cover](./images/cover.png)
-[![Watch the video](https://img.youtube.com/vi/ol8-Vw4EQvI/0.JPG)](https://www.youtube.com/watch?v=ol8-Vw4EQvI)
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=ol8-Vw4EQvI">
+    <img src="https://img.youtube.com/vi/ol8-Vw4EQvI/0.jpg" alt="Watch the video" width="560"/>
+  </a>
+</p>
 
 Created By: [Mukesh Sankhla](https://www.linkedin.com/in/mukeshsankhla)
 

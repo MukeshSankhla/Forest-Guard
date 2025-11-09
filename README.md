@@ -2,7 +2,7 @@
 ### A Decentralized Edge-AI LoRa Mesh Network for Forest Surveillance
 
 ![Cover](./images/cover.png)
-[![Watch the video](https://img.youtube.com/vi/ol8-Vw4EQvI/0.jpg)](https://www.youtube.com/watch?v=ol8-Vw4EQvI)
+[![Watch the video](https://img.youtube.com/vi/ol8-Vw4EQvI/0.JPG)](https://www.youtube.com/watch?v=ol8-Vw4EQvI)
 
 Created By: [Mukesh Sankhla](https://www.linkedin.com/in/mukeshsankhla)
 
@@ -36,12 +36,12 @@ With the NextPCB, we will fabricate custom PCBs for the sensor nodes. These PCBs
 This ensures ruggedness, consistent quality, and rapid deployment of multiple nodes, transforming our prototype into a scalable, field-ready system.
 
 ![Cover1](./images/C1.JPG)
-![Cover2](./images/C2.jpg)
-![Cover3](./images/C3.jpg)
-![Cover4](./images/C4.jpg)
-![Cover5](./images/C5.jpg)
-![Cover6](./images/C6.jpg)
-![Cover7](./images/C7.jpg)
+![Cover2](./images/C2.JPG)
+![Cover3](./images/C3.JPG)
+![Cover4](./images/C4.JPG)
+![Cover5](./images/C5.JPG)
+![Cover6](./images/C6.JPG)
+![Cover7](./images/C7.JPG)
 
 **The Big Picture**
 Forest Guard isn’t just a hardware project; it’s a blueprint for protecting forests worldwide. By combining edge AI, mesh networking, and sustainable power, we deliver a system that communities, conservationists, and governments can deploy today to build a safer, greener tomorrow.
@@ -49,7 +49,7 @@ Forest Guard isn’t just a hardware project; it’s a blueprint for protecting 
 ## Supplies
 **Components For 1x Node Unit:**
 
-![Cover7](./images/S1.jpg)
+![Cover7](./images/S1.JPG)
 1.  1x Custom Node PCB
 2.  1x [Gravity: Multifunctional Environmental sensor](https://www.dfrobot.com/product-2528.html)
 3.  1x [Gravity: GNSS Sensor](https://www.dfrobot.com/product-2651.html)
@@ -60,18 +60,18 @@ Forest Guard isn’t just a hardware project; it’s a blueprint for protecting 
 8.  1x [70x70mm Solar Panel](https://techiesms.com/product/mini-epoxy-solar-panel-70x70-mm/)
 9.  8x [M3x10mm Screws](https://www.dfrobot.com/product-841.html)
 
-![Cover](./images/S2.jpg)
-![Cover](./images/S3.jpg)
-![Cover](./images/S4.jpg)
-![Cover](./images/S5.jpg)
-![Cover](./images/S6.jpg)
-![Cover](./images/S7.jpg)
-![Cover](./images/S8.jpg)
-![Cover](./images/S9.jpg)
+![Cover](./images/S2.JPG)
+![Cover](./images/S3.JPG)
+![Cover](./images/S4.JPG)
+![Cover](./images/S5.JPG)
+![Cover](./images/S6.JPG)
+![Cover](./images/S7.JPG)
+![Cover](./images/S8.JPG)
+![Cover](./images/S9.JPG)
 
 **Components For 1x Gateway Unit:**
 
-![Cover](./images/S11.jpg)
+![Cover](./images/S11.JPG)
 1.  1x [Arduino Uno R4 WiFi](https://www.dfrobot.com/product-2700.html)
 2.  1x [Fermion: 3.5” 480x320 TFT LCD Display](https://www.dfrobot.com/product-2107.html)
 3.  1x [RP2040 LoRa](https://www.waveshare.com/rp2040-lora.htm?sku=26591)
@@ -80,9 +80,9 @@ Forest Guard isn’t just a hardware project; it’s a blueprint for protecting 
 6.  4x [M2x5mm Screws](https://www.amazon.com/4mm-6mm-10mm-12mm-16mm/dp/B0B93G1H9L/ref=sr_1_1_sspa?crid=2GR42NYXUIMID&dib=eyJ2IjoiMSJ9.Xe3zLQ7GMbVX4e9UdWnn10jmwVZbrhtrPgqKBL6jyA9giwWnMO_syicAVx0SqjwmyQ3S8ZBgPyBJd7m30o0efQgCu5xpCBUaLdX6_Yr3DZ7eUbAJUxp3BYhjcgL-8RxRY0Uk7VQafZPhQh9Sg9Nxg1LvrvByA1wrTKX4yInN41Ve31AoRWz2lgZMABQR8o6QY-KltVrHKGda8fx43bDSc9X-By4T010KSPjlOLZuI84.2DMZxvKbVecFjM3DbGS6Nj-fDLEpk5pngZRohIU-xzk&dib_tag=se&keywords=M2%2Bscrews&qid=1757991555&sprefix=m2%2Bscre%2Caps%2C533&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1)
 7.  1x 3V Buzzer
 
-![Cover](./images/S12.jpg)
-![Cover](./images/S13.jpg)
-![Cover](./images/S14.jpg)
+![Cover](./images/S12.JPG)
+![Cover](./images/S13.JPG)
+![Cover](./images/S14.JPG)
 
 **Tools**
 1.  3D Printer (for enclosures and mounting parts)
@@ -90,7 +90,7 @@ Forest Guard isn’t just a hardware project; it’s a blueprint for protecting 
 3.  Screwdriver Kit (for M2/M3 hardware)
 
 ## Step 1: PCB Design
-![Cover](./images/PD2.jpg)
+![Cover](./images/PD2.JPG)
 Designing the **Forest Guard PCB** was the very first milestone in this project.
 
 I am not a professional PCB designer, but with hands-on experience in electronics and by studying references from existing **ESP32-S3 development boards**, I created a **custom PCB** in **EasyEDA** that integrates:
@@ -113,11 +113,11 @@ This combination gave me the flexibility to test multiple prototypes, while the 
 ![Cover](./images/PCB1.png)
 ![Cover](./images/PCB2.png)
 
-![Cover](./images/PD0.jpg)
-![Cover](./images/PD1.jpg)
-![Cover](./images/PD3.jpg)
-![Cover](./images/PD4.jpg)
-![Cover](./images/PD5.jpg)
+![Cover](./images/PD0.JPG)
+![Cover](./images/PD1.JPG)
+![Cover](./images/PD3.JPG)
+![Cover](./images/PD4.JPG)
+![Cover](./images/PD5.JPG)
 
 ## Step 2: Meshtastic Setup on RP2040 LoRa
 We’ll flash the Meshtastic firmware onto the RP2040 LoRa modules and configure them for **UART communication**.
@@ -126,9 +126,9 @@ We’ll flash the Meshtastic firmware onto the RP2040 LoRa modules and configure
 
 Always connect the **antenna before powering on** the LoRa module to prevent damage.
 
-![Cover](./images/S21.jpg)
-![Cover](./images/S22.jpg)
-![Cover](./images/S23.jpg)
+![Cover](./images/S21.JPG)
+![Cover](./images/S22.JPG)
+![Cover](./images/S23.JPG)
 
 **1\. Flashing Meshtastic Firmware**
 
@@ -195,7 +195,7 @@ This configures the module to communicate via **UART** with external devices.
 Repeat the above steps for every LoRa module you plan to use in your project.
 
 ## Step 3: PCB Assembly
-![Cover](./images/S31.jpg)
+![Cover](./images/S31.JPG)
 With the custom PCB manufactured, the next step is to carefully solder the sensor modules and communication hardware onto the board.
 
 **Components to Solder**
@@ -224,14 +224,14 @@ With the custom PCB manufactured, the next step is to carefully solder the senso
 2.  Probe between the module pin and the corresponding PCB pad/trace.
 3.  A beep or zero-resistance confirms proper connectivity.
 
-![Cover](./images/S32.jpg)
-![Cover](./images/S33.jpg)
-![Cover](./images/S34.jpg)
-![Cover](./images/S35.jpg)
-![Cover](./images/S36.jpg)
-![Cover](./images/S37.jpg)
-![Cover](./images/S38.jpg)
-![Cover](./images/S39.jpg)
+![Cover](./images/S32.JPG)
+![Cover](./images/S33.JPG)
+![Cover](./images/S34.JPG)
+![Cover](./images/S35.JPG)
+![Cover](./images/S36.JPG)
+![Cover](./images/S37.JPG)
+![Cover](./images/S38.JPG)
+![Cover](./images/S39.JPG)
 
 ## Step 4: Node CAD Design and 3D Printing
 
@@ -850,9 +850,9 @@ For the **Gateway enclosure**, I started by importing the **Arduino Uno R4 WiFi*
 
 **3D Printing**
 
-![Cover](./images/ST241.jpg)
-![Cover](./images/ST242.jpg)
-![Cover](./images/ST243.jpg)
+![Cover](./images/ST241.JPG)
+![Cover](./images/ST242.JPG)
+![Cover](./images/ST243.JPG)
 
 I 3D printed both the housing and the cover in **light gray** using my Bambu Labs P1S printer. The parts came out strong, precise, and professional-looking, making the gateway unit both robust and visually consistent with the Node design.
 
@@ -864,11 +864,11 @@ I 3D printed both the housing and the cover in **light gray** using my Bambu Lab
 3.  Secure the display using **4× M2 screws**.
 4.  Double-check that the screen sits flush with the housing and is firmly fixed in place.
 
-![Cover](./images/ST251.jpg)
-![Cover](./images/ST252.jpg)
-![Cover](./images/ST253.jpg)
-![Cover](./images/ST254.jpg)
-![Cover](./images/ST255.jpg)
+![Cover](./images/ST251.JPG)
+![Cover](./images/ST252.JPG)
+![Cover](./images/ST253.JPG)
+![Cover](./images/ST254.JPG)
+![Cover](./images/ST255.JPG)
 
 ## Step 26: Antenna Assembly
 1.  Take the **LoRa antenna**.
@@ -877,13 +877,13 @@ I 3D printed both the housing and the cover in **light gray** using my Bambu Lab
 4.  Screw the antenna back onto the LoRa module from the outside.
 5.  Make sure the antenna is firmly seated and facing upright.
 
-![Cover](./images/ST261.jpg)
-![Cover](./images/ST262.jpg)
-![Cover](./images/ST263.jpg)
-![Cover](./images/ST264.jpg)
-![Cover](./images/ST265.jpg)
-![Cover](./images/ST266.jpg)
-![Cover](./images/ST267.jpg)
+![Cover](./images/ST261.JPG)
+![Cover](./images/ST262.JPG)
+![Cover](./images/ST263.JPG)
+![Cover](./images/ST264.JPG)
+![Cover](./images/ST265.JPG)
+![Cover](./images/ST266.JPG)
+![Cover](./images/ST267.JPG)
 
 ## Step 27: Arduino Assembly
 1.  Take the **Arduino Uno R4 WiFi** and the **gateway cover**.
@@ -891,12 +891,12 @@ I 3D printed both the housing and the cover in **light gray** using my Bambu Lab
 3.  Secure it in place using **4× M2 screws**.
 4.  Ensure the **Type-C port** and headers remain accessible through the cover cutouts.
 
-![Cover](./images/ST271.jpg)
-![Cover](./images/ST272.jpg)
-![Cover](./images/ST273.jpg)
-![Cover](./images/ST274.jpg)
-![Cover](./images/ST275.jpg)
-![Cover](./images/ST276.jpg)
+![Cover](./images/ST271.JPG)
+![Cover](./images/ST272.JPG)
+![Cover](./images/ST273.JPG)
+![Cover](./images/ST274.JPG)
+![Cover](./images/ST275.JPG)
+![Cover](./images/ST276.JPG)
 
 ## Step 28: Buzzer and Power Switch Assembly
 1.  Take the **buzzer**, the **power switch**, and some **quick glue**.
@@ -904,10 +904,10 @@ I 3D printed both the housing and the cover in **light gray** using my Bambu Lab
 3.  Insert the **power switch** into its cutout hole on the cover.
 4.  Apply a small amount of **quick glue** around the switch edges to secure it in place.
 
-![Cover](./images/ST281.jpg)
-![Cover](./images/ST282.jpg)
-![Cover](./images/ST283.jpg)
-![Cover](./images/ST284.jpg)
+![Cover](./images/ST281.JPG)
+![Cover](./images/ST282.JPG)
+![Cover](./images/ST283.JPG)
+![Cover](./images/ST284.JPG)
 
 ## Step 29: Connections
 
@@ -936,20 +936,20 @@ Power & Peripherals
 3.  GND → Arduino GND
 4.  +Ve → Arduino Pin5
 
-![Cover](./images/ST291.jpg)
-![Cover](./images/ST292.jpg)
-![Cover](./images/ST293.jpg)
-![Cover](./images/ST294.jpg)
-![Cover](./images/ST295.jpg)
-![Cover](./images/ST296.jpg)
-![Cover](./images/ST297.jpg)
-![Cover](./images/ST298.jpg)
-![Cover](./images/ST299.jpg)
+![Cover](./images/ST291.JPG)
+![Cover](./images/ST292.JPG)
+![Cover](./images/ST293.JPG)
+![Cover](./images/ST294.JPG)
+![Cover](./images/ST295.JPG)
+![Cover](./images/ST296.JPG)
+![Cover](./images/ST297.JPG)
+![Cover](./images/ST298.JPG)
+![Cover](./images/ST299.JPG)
 
 ## Step 30: Arduino Code
 Now let’s program the **Gateway** so it can communicate with the nodes, process sensor/event data, and upload everything to Firebase.
 
-![Cover](./images/ST301.jpg)
+![Cover](./images/ST301.JPG)
 
 **Download the Code**
 
@@ -1186,10 +1186,10 @@ It essentially turns the **Forest Guard network** into a **living digital twin o
 
 ## Step 34: Conclusion
 
-![Cover](./images/ST341.jpg)
-![Cover](./images/ST342.jpg)
-![Cover](./images/ST343.jpg)
-![Cover](./images/ST344.jpg)
+![Cover](./images/ST341.JPG)
+![Cover](./images/ST342.JPG)
+![Cover](./images/ST343.JPG)
+![Cover](./images/ST344.JPG)
 
 With the completion of this build, we have created **Forest Guard**, a decentralized **forest surveillance system** that can detect and alert about critical events such as **gunshots** or **forest fires** — even in regions with no internet or cellular coverage. By combining **low-power LoRa mesh networking**, **solar-powered sensor nodes**, and **edge AI intelligence**, this project proves that modern technology can play a vital role in **safeguarding our forests** and protecting wildlife.
 

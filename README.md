@@ -35,7 +35,7 @@ With the NextPCB, we will fabricate custom PCBs for the sensor nodes. These PCBs
 
 This ensures ruggedness, consistent quality, and rapid deployment of multiple nodes, transforming our prototype into a scalable, field-ready system.
 
-![Cover1](./images/C1.jpg)
+![Cover1](./images/C1.JPG)
 ![Cover2](./images/C2.jpg)
 ![Cover3](./images/C3.jpg)
 ![Cover4](./images/C4.jpg)

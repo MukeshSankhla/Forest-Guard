@@ -35,13 +35,13 @@ With the NextPCB, we will fabricate custom PCBs for the sensor nodes. These PCBs
 
 This ensures ruggedness, consistent quality, and rapid deployment of multiple nodes, transforming our prototype into a scalable, field-ready system.
 
-![Cover](./images/C1.jpg)
-![Cover](./images/C2.jpg)
-![Cover](./images/C3.jpg)
-![Cover](./images/C4.jpg)
-![Cover](./images/C5.jpg)
-![Cover](./images/C6.jpg)
-![Cover](./images/C7.jpg)
+![Cover1](./images/C1.jpg)
+![Cover2](./images/C2.jpg)
+![Cover3](./images/C3.jpg)
+![Cover4](./images/C4.jpg)
+![Cover5](./images/C5.jpg)
+![Cover6](./images/C6.jpg)
+![Cover7](./images/C7.jpg)
 
 **The Big Picture**
 Forest Guard isn’t just a hardware project; it’s a blueprint for protecting forests worldwide. By combining edge AI, mesh networking, and sustainable power, we deliver a system that communities, conservationists, and governments can deploy today to build a safer, greener tomorrow.
@@ -49,7 +49,7 @@ Forest Guard isn’t just a hardware project; it’s a blueprint for protecting 
 ## Supplies
 **Components For 1x Node Unit:**
 
-![Cover](./images/S1.jpg)
+![Cover7](./images/S1.jpg)
 1.  1x Custom Node PCB
 2.  1x [Gravity: Multifunctional Environmental sensor](https://www.dfrobot.com/product-2528.html)
 3.  1x [Gravity: GNSS Sensor](https://www.dfrobot.com/product-2651.html)

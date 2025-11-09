@@ -4,8 +4,11 @@
 ![Cover](./images/cover.png)
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=ol8-Vw4EQvI">
-    <img src="https://img.youtube.com/vi/ol8-Vw4EQvI/0.jpg" alt="Watch the video" width="560"/>
+  <a href="https://www.youtube.com/watch?v=ol8-Vw4EQvI" target="_blank">
+    <img src="https://img.youtube.com/vi/ol8-Vw4EQvI/0.jpg" 
+         alt="Watch the video"
+         width="560"
+         style="border-radius:10px;">
   </a>
 </p>
 
